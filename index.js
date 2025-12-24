@@ -1,4 +1,5 @@
 import express from "express";
+import express from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import mailRoute from "./sendMail.js";
@@ -15,6 +16,13 @@ app.use("/send-mail", mailRoute);
 app.get("/", (req, res) => {
   res.send("✅ Backend Running Successfully!");
 });
+
+
+app.use(history());
+app.use(express.static(path.join(__dirname, "dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+ });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
